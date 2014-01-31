@@ -1,3 +1,10 @@
+# Morse Code Translator
+# Perl 
+# Copyright (C) 2013 Ng Tzy Luen. All Rights Reserved.
+# 
+# Notes:
+# Tested under Perl v5.14.2
+
 package Morse;
 use strict;
 use warnings;

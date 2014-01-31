@@ -1,3 +1,12 @@
+/**
+ * Morse Code Translator
+ * Java
+ * Copyright (C) 2011 Ng Tzy Luen. All Rights Reserved.
+ *
+ * Notes:
+ * Tested under Java Development Kit 1.7.0_25
+ */
+
 public class Morse {
     public static String getMorse(char c) {
         switch (c) {

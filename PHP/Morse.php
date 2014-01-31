@@ -1,4 +1,13 @@
 <?php
+/**
+  * Morse Code Translator
+  * PHP 
+  * Copyright (C) 2013 Ng Tzy Luen. All Rights Reserved.
+  *
+  * Notes:
+  * Tested under PHP 5.4.4-14 CLI
+  */
+
 class Morse {
     public static function getMorse($c) {
         switch ($c) {

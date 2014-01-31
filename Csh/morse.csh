@@ -1,4 +1,11 @@
 #!/bin/csh
+#
+# Morse Code Translator
+# Csh
+# Copyright (C) 2013 Ng Tzy Luen. All Rights Reserved.
+# 
+# Notes:
+# Tested under bsd-csh 20110502-2
 
 set line = "$<"
 set chars = `echo $line | fold -w1`

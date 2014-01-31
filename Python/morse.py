@@ -1,3 +1,10 @@
+# Morse Code Translator
+# Python
+# Copyright (C) 2013 Ng Tzy Luen. All Rights Reserved.
+# 
+# Notes:
+# Tested under Python 2.7.3
+
 class Morse:
     morse_code_table = {'A': ".-", 'B': "-...", 'C': "-.-.",
                         'D': "-..", 'E': ".", 'F': "..-.",
