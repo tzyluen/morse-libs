@@ -8,7 +8,6 @@
 # Tested under Bash version 4.2.37
 
 #set -x #debug
-
 declare -A morse_code_table
 morse_code_table=(["A"]=".-"      ["B"]="-..."     ["C"]="-.-." ["D"]="-.."
                   ["E"]="."       ["F"]="..-."     ["G"]="--."  ["H"]="...."
@@ -45,13 +44,16 @@ to_letter() {
 }
 
 
-l="i love you"
+while read x; do
+   l="$l$x" 
+done
+
+
 l=$(to_upper "$l")
 unset morse_code_line
 for i in $(seq 0 $((${#l} - 1))); do
     unset morse
     morse=$(get_morse "${l:$i:1}")
-
     if [[ -z $morse ]]; then
         case "${l:$i:1}" in
             \\)
@@ -62,29 +64,18 @@ for i in $(seq 0 $((${#l} - 1))); do
                 ;;
         esac
     fi
-
     morse_code_line="$morse_code_line $morse"
 done
-
 echo -e "$morse_code_line"
 
-morse_code_list=$(echo "$morse_code_line" | tr "  " "<space>")
+
+declare -A morse_code_list=$(echo "$morse_code_line" | sed 's/  /\n/g')
 unset message
-for ((i = 0; i < ${#morse_code_list[@]}; ++i)); do
-    unset letter
-    letter=$(to_letter "${morse_code_list[$i]}")
+for m in ${morse_code_list[@]}; do
+    letter=$(to_letter $m)
     if [[ -z $letter ]]; then
         message="$letter"
     fi
     message="$message$letter"
 done
-#for m in ${morse_code_list[@]}; do
-#    echo "1)$m"
-#    letter=$(to_letter "$m")
-#    if [[ -z $letter ]]; then
-#        message="$letter"
-#    fi
-#    message="$message$letter"
-#done
-
 echo -e "$message"
