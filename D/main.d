@@ -16,6 +16,10 @@ void main(string[] args) {
     while (stdin.readln(buf)) {
         if (buf.length < 1)
             continue;
-        Morse.getLineMorse(buf);
+        auto s = Morse.lineToMorse(buf);
+        writeln(s);
+
+        auto l = Morse.morseToLine(s);
+        writeln(l);
     }
 }

@@ -9,6 +9,7 @@
 module morse;
 import std.stdio;
 import std.string;
+import core.exception;
 
 class Morse {
     static const string[char] morse_code_table;
@@ -16,6 +17,7 @@ class Morse {
     /**
      * Unable to initialize a static const associative array:
      * http://www.digitalmars.com/d/archives/digitalmars/D/learn/Associative_array_literal_is_non-constant_32207.html
+     * and therefore, use this() :
      */
     static this() {
         morse_code_table = ['A': ".-",      'B': "-...",    'C': "-.-.",
@@ -35,15 +37,20 @@ class Morse {
                             '(': "-.--.",   ')': "-.--.-",  '&': ".-...",
                             ':': "---...",  ';': "-.-.-.",  '=': "-...-",
                             '+': ".-.-.",   '-': "-....-",  '_': "..--.-",
-                            '\"': ".-..-.", '$': "...-..-", '@': ".--.-.",
-                            ' ': " ",       '\n': "\n"];
+                            '\"': ".-..-.", '$': "...-..-", '@': ".--.-."];
     }
 
-    public static void getLineMorse(char[] s) {
-        char[] buf = toUpper(s);
-        for (size_t i = 0; i < buf.length; ++i) {
-            writef("%s ", toUpper(Morse.getMorse(buf[i])));
+    public static string lineToMorse(const char[] s) {
+        auto buf = toUpper(s);
+        string m = "";
+        for (size_t i = 0; i < buf.length - 1; ++i) {
+            try {
+                m ~= format("%s ", Morse.getMorse(buf[i]));
+            } catch (RangeError e) {
+                m ~= format("%s ", buf[i]);
+            }
         }
+        return m;
     }
 
     public static string getMorse(const char c) {
@@ -51,6 +58,26 @@ class Morse {
     }
 
     public static char toLetter(const string s) {
-        return 'c';
+        if (s == " ") return ' ';
+        foreach (key, value; morse_code_table) {
+            if (value == s)
+                return key;
+        }
+        return ' ';
+    }
+
+    public static string morseToLine(const string s) {
+        auto listOfMorse = s.split("  ");
+        string line = "";
+        foreach (morses; listOfMorse) {
+            auto morse = morses.split(" ");
+            /*for (size_t i = 0; i < morse.length; ++i) {
+                line ~= format("%s", Morse.toLetter(morse[i]));
+            }*/
+            foreach (m; morse) {
+                line ~= format("%s", Morse.toLetter(m));
+            }
+        }
+        return line;
     }
 }
