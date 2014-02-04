@@ -16,8 +16,6 @@ void main(string[] args) {
     while (stdin.readln(buf)) {
         if (buf.length < 1)
             continue;
-        for (size_t i = 0; i < buf.length; ++i) {
-            writef("%s ", Morse.getMorse(buf[i]));
-        }
+        Morse.getLineMorse(buf);
     }
 }

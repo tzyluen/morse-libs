@@ -8,6 +8,7 @@
  */
 module morse;
 import std.stdio;
+import std.string;
 
 class Morse {
     static const string[char] morse_code_table;
@@ -38,8 +39,11 @@ class Morse {
                             ' ': " ",       '\n': "\n"];
     }
 
-    public static string getLineMorse(const string s) {
-        return "string";
+    public static void getLineMorse(char[] s) {
+        char[] buf = toUpper(s);
+        for (size_t i = 0; i < buf.length; ++i) {
+            writef("%s ", toUpper(Morse.getMorse(buf[i])));
+        }
     }
 
     public static string getMorse(const char c) {
