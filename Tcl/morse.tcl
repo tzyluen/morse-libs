@@ -28,24 +28,23 @@ proc line_to_morse {line} {
 }
 
 proc get_morse {c} {
-    if {$c eq " "} return ""
+    if {$c==" "} { return " " }
     return $::morse_code_map($c)
 }
 
 proc morse_to_string {morse_line} {
     set morses [split $morse_line]
     foreach morse $morses {
-        puts $morse
-        puts [to_letter $morse]
+        append result [format "%s" [to_letter $morse]]
     }
+    return $result
 }
 
 proc to_letter {morse} {
+    if {$morse==""} { return " " }
     foreach k [array names ::morse_code_map] {
-#puts -nonewline "debug: " [$morse_code_map($k)]
-#puts $k $::morse_code_map($k)
-#if {$morse eq $morse_code_map($k)} {
-#return $k
-#}
+        if {$morse eq $::morse_code_map($k)} {
+            return $k
+        }
     }
 }

@@ -14,5 +14,6 @@ while { [gets $lines line] >= 0 } {
     set morse_line [line_to_morse $line]
     puts $morse_line
 
-    morse_to_string $morse_line
+    set morse_line [morse_to_string $morse_line]
+    puts $morse_line
 }
