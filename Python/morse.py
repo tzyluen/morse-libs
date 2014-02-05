@@ -31,7 +31,7 @@ class Morse:
 
     @classmethod
     def get_morse(cls, c):
-        return cls.morse_code_table[c]
+        return cls.morse_code_table[c.upper()]
 
     @classmethod
     def to_letter(cls, s):
