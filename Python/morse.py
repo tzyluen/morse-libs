@@ -35,6 +35,6 @@ class Morse:
 
     @classmethod
     def to_letter(cls, s):
-        for x, y in cls.morse_code_table:
+        for x,y in cls.morse_code_table.iteritems():
             if y == s:
                 return x
