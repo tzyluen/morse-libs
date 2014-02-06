@@ -1,6 +1,6 @@
 morse-libs
 ==========
-A list of morse code tranlator programs in various programming languages and paradigms, for fun.
+A list of morse code translator programs in various programming languages and paradigms, for fun.
 
 Reference:
 ----------
