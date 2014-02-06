@@ -11,6 +11,12 @@ Usage:
     HELLO, WORLD
 
 
+    morse-libs/Tcl$ echo "hello, world" | tclsh main.tcl
+    .... . .-.. .-.. --- --..--   .-- --- .-. .-.. -.. 
+    HELLO,  WORLD 
+
+
+
 Reference:
 ----------
 http://en.wikipedia.org/wiki/Morse_code#Letters.2C_numbers.2C_punctuation
