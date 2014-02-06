@@ -20,6 +20,7 @@ array set ::morse_code_map {
 }
 
 proc line_to_morse {line} {
+    set line [string toupper $line]
     set strings [split $line {}]
     foreach c $strings {
          append result [format "%s " [get_morse $c]]
