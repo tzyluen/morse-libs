@@ -4,10 +4,11 @@ A list of morse code translator programs in various programming languages and pa
 
 Usage:
 ------
-morse-libs/C++$ make all
-morse-libs/C++$ echo "hello, world" | ./main
-.... . .-.. .-.. --- --..--   .-- --- .-. .-.. -.. 
-HELLO, WORLD
+
+    morse-libs/C++$ make all
+    morse-libs/C++$ echo "hello, world" | ./main
+    .... . .-.. .-.. --- --..--   .-- --- .-. .-.. -.. 
+    HELLO, WORLD
 
 
 Reference:
