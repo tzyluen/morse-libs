@@ -14,19 +14,15 @@ import fileinput
 
 for line in fileinput.input():
     s = list(line)
-    #morse_code_list = []
     morse_code_line = ""
-    for c in s:
+    for c in s[:-1]:
         morse_code = Morse.get_morse(c)
-        #morse_code_list.append((c,morse_code))
-        #print "%s" % morse_code,
         morse_code_line += morse_code + " "
-    print "%s" % morse_code_line
-
+    morse_code = Morse.get_morse(s[-1])
+    morse_code_line += morse_code
+    sys.stdout.write(morse_code_line)
 
 import re
 for words in re.split("  ", morse_code_line):
-    for letter in re.split(" ", words):
-        print "%s" % Morse.to_letter(letter),
-#for x,y in morse_code_list:
-    #print "%s" % Morse.to_letter(y),
+    for morse in re.split(" ", words):
+        sys.stdout.write(str(Morse.to_letter(morse)))

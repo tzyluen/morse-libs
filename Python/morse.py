@@ -38,3 +38,4 @@ class Morse:
         for x,y in cls.morse_code_table.iteritems():
             if y == s:
                 return x
+        return " "
