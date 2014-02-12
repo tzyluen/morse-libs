@@ -1,0 +1,38 @@
+<!--
+ Morse Code Translator
+ JavaScript
+ Copyright (C) 2013 Ng Tzy Luen. All Rights Reserved.
+ 
+ Notes:
+ A minimal/simplest web form tested under Iceweasel 17.0.10
+--> 
+<html>
+    <head>
+        <title>JavaScript Morse Code Translator</title>
+        <script type="text/javascript" src="morse.js"></script>
+        <script type="text/javascript" src="jquery-1.11.0.min.js"></script>
+    </head>
+    <body>
+        <table>
+            <tr>
+                <td>Text</td>
+                <td>Morse Code</td>
+            </tr>
+            <tr>
+                <td><textarea id="txtText" rows="4" cols="50"></textarea></td>
+                <td><textarea id="txtMorse" rows="4" cols="50"></textarea></td>
+            </tr>
+        </table>
+    </body>
+    <script type="text/javascript">
+        $(function() {
+            $("#txtText").on("keyup", function() {
+                $("#txtMorse").val(getMorse($(this).val()));
+            });
+            $("#txtMorse").on("keypress", function() {
+                $("#txtText").val(toLetter($(this).val()));
+            });
+        });
+
+    </script>
+</html>
