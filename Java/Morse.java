@@ -3,130 +3,73 @@
  * Java
  * Copyright (C) 2011 Ng Tzy Luen. All Rights Reserved.
  *
- * Notes:
- * Tested under Java Development Kit 1.7.0_25
+ * Tested under JDK 1.7.0_25
  */
+import java.util.Map;
+import java.util.HashMap;
 
 public class Morse {
-    public static String getMorse(char c) {
-        switch (c) {
-            case 'A': case 'a': return ".-";
-            case 'B': case 'b': return "-...";
-            case 'C': case 'c': return "-.-.";
-            case 'D': case 'd': return "-..";
-            case 'E': case 'e': return ".";
-            case 'F': case 'f': return "..-.";
-            case 'G': case 'g': return "--.";
-            case 'H': case 'h': return "....";
-            case 'I': case 'i': return "..";
-            case 'J': case 'j': return ".---";
-            case 'K': case 'k': return "-.-";
-            case 'L': case 'l': return ".-..";
-            case 'M': case 'm': return "--";
-            case 'N': case 'n': return "-.";
-            case 'O': case 'o': return "---";
-            case 'P': case 'p': return ".--.";
-            case 'Q': case 'q': return "--.-";
-            case 'R': case 'r': return ".-.";
-            case 'S': case 's': return "...";
-            case 'T': case 't': return "-";
-            case 'U': case 'u': return "..-";
-            case 'V': case 'v': return "...-";
-            case 'W': case 'w': return ".--";
-            case 'X': case 'x': return "-..-";
-            case 'Y': case 'y': return "-.--";
-            case 'Z': case 'z': return "--..";
-            case '0': return "-----";
-            case '1': return ".----";
-            case '2': return "..---";
-            case '3': return "...--";
-            case '4': return "....-";
-            case '5': return ".....";
-            case '6': return "-....";
-            case '7': return "--...";
-            case '8': return "---..";
-            case '9': return "----.";
-            case '.': return ".-.-.-";
-            case ',': return "--..--";
-            case '?': return "..--..";
-            case '\'': return ".----.";
-            case '!': return "-.-.--";
-            case '/': return "-..-.";
-            case '(': return "-.--.";
-            case ')': return "-.--.-";
-            case '&': return ".-...";
-            case ':': return "---...";
-            case ';': return "-.-.-.";
-            case '=': return "-...-";
-            case '+': return ".-.-.";
-            case '-': return "-....-";
-            case '_': return "..--.-";
-            case '"': return ".-..-.";
-            case '$': return "...-..-";
-            case '@': return ".--.-.";
-            case ' ': return " ";
-            default: return "";
+    private static final Map<Character, String> mm = new HashMap(){{
+            put('A', ".-"); put('B', "-..."); put('C', "-.-.");
+            put('D', "-.."); put('E', "."); put('F', "..-.");
+            put('G', "--."); put('H', "...."); put('I', "..");
+            put('J', ".---"); put('K', "-.-"); put('L', ".-..");
+            put('M', "--"); put('N', "-."); put('O', "---");
+            put('P', ".--."); put('Q', "--.-"); put('R', ".-.");
+            put('S', "..."); put('T', "-"); put('U', "..-");
+            put('V', "...-"); put('W', ".--"); put('X', "-..-");
+            put('Y', "-.--"); put('Z', "--.."); put('0', "-----");
+            put('1', ".----"); put('2', "..---"); put('3', "...--");
+            put('4', "....-"); put('5', "....."); put('6', "-....");
+            put('7', "--..."); put('8', "---.."); put('9', "----.");
+            put('.', ".-.-.-"); put(',', "--..--"); put('?', "..--..");
+            put('\'', ".----."); put('!', "-.-.--"); put('/', "-..-.");
+            put('(', "-.--."); put(')', "-.--.-"); put('&', ".-...");
+            put(':', "---..."); put(';', "-.-.-."); put('=', "-...-");
+            put('+', ".-.-."); put('-', "-....-"); put('_', "..--.-");
+            put('"', ".-..-."); put('$', "...-..-"); put('@', ".--.-.");
+            put(' ', " ");
+    }};
+
+
+    public static String lineToMorse(String line) {
+        String morseCode = new String();
+        char str[]  = line.toUpperCase().toCharArray();
+        for (char c : str) {
+            morseCode += Morse.getMorse(c);
+            if (c != ' ')
+                morseCode += " ";
         }
+
+        return morseCode;
     }
 
-    public static char toLetter(String s) {
-        switch (s) {
-            case ".-": return 'A';
-            case "-...": return 'B';
-            case "-.-.": return 'C';
-            case "-..": return 'D';
-            case ".": return 'E';
-            case "..-.": return 'F';
-            case "--.": return 'G';
-            case "....": return 'H';
-            case "..": return 'I';
-            case ".---": return 'J';
-            case "-.-": return 'K';
-            case ".-..": return 'L';
-            case "--": return 'M';
-            case "-.": return 'N';
-            case "---": return 'O';
-            case ".--.": return 'P';
-            case "--.-": return 'Q';
-            case ".-.": return 'R';
-            case "...": return 'S';
-            case "-": return 'T';
-            case "..-": return 'U';
-            case "...-": return 'V';
-            case ".--": return 'W';
-            case "-..-": return 'X';
-            case "-.--": return 'Y';
-            case "--..": return 'Z';
-            case "-----": return '0';
-            case ".----": return '1';
-            case "..---": return '2';
-            case "...--": return '3';
-            case "....-": return '4';
-            case ".....": return '5';
-            case "-....": return '6';
-            case "--...": return '7';
-            case "---..": return '8';
-            case "----.": return '9';
-            case ".-.-.-": return '.';
-            case "--..--": return ',';
-            case "..--..": return '?';
-            case ".----.": return '\'';
-            case "-.-.--": return '!';
-            case "-..-.": return '/';
-            case "-.--.": return '(';
-            case "-.--.-": return ')';
-            case ".-...": return '&';
-            case "---...": return ':';
-            case "-.-.-.": return ';';
-            case "-...-": return '=';
-            case ".-.-.": return '+';
-            case "-....-": return '-';
-            case "..--.-": return '_';
-            case ".-..-.": return '"';
-            case "...-..-": return '$';
-            case ".--.-.": return '@';
-            case " ": return ' ';
-            default: return '\0';
+
+    public static String getMorse(char c) {
+        return mm.get(c);
+    }
+
+
+    public static String morseToString(String morses) {
+        String morse[] = morses.split("  ");
+        String r = new String();
+        for (String m : morse) {
+            for (String s : m.split(" ")) {
+                r += Morse.toLetter(s);
+            }
+            r += " ";
         }
+
+        return r;
+    }
+
+
+    public static char toLetter(String s) {
+        for (Map.Entry<Character, String> p : mm.entrySet()) {
+            if (p.getValue().equals(s))
+                return p.getKey();
+        }
+
+        return 0;
     }
 }
