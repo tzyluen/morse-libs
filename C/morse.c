@@ -13,7 +13,8 @@
 #include <string.h>
 #include "morse.h"
 
-Morse_map *Morse_map_create() {
+Morse_map *Morse_map_create()
+{
     Morse_map mm[MORSE_MAP_SIZE] = {
          {.c='\n', .m="\n"},      {.c=' ', .m=" "},       {.c='!', .m="-.-.--"},
          {.c='\"',.m= ".-..-."},  {.c='$', .m="...-..-"}, {.c='&', .m=".-..."},

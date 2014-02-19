@@ -24,6 +24,7 @@ int main(int argc, char **argv)
         printf("%s\n", s);
     }
 
+    free(mm);
     free(line);
     exit(EXIT_SUCCESS);
 }
