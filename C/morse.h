@@ -5,8 +5,8 @@
  *
  * Tested under GNU C gcc 4.7.2
  */
-#ifndef _MORSE_H_
-#define _MORSE_H_
+#ifndef MORSE_H
+#define MORSE_H
 
 #define MORSE_MAP_SIZE 56
 #define MORSE_CODE_MAX_CHAR 10
