@@ -10,16 +10,9 @@
 require 'Morse.php';
 
 $line = trim(fgets(STDIN));
-$morseCodeList = array();
+$morses = Morse::stringToMorse($line);
+printf("%s\n", $morses);
 
-foreach (str_split($line) as $c) {
-    $morseCode = Morse::getMorse($c);
-    array_push($morseCodeList, $morseCode);
-    print $morseCode." ";
-} print "\n";
-
-foreach ($morseCodeList as $morseCode) {
-    print Morse::toLetter($morseCode);
-} print "\n";
-
+$string = Morse::morseToString($morses);
+printf("%s\n", $string);
 ?>
