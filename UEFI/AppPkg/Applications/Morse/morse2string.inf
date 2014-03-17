@@ -1,0 +1,34 @@
+[Defines]
+    INF_VERSION = 0x00010005
+    BASE_NAME = morse2string
+    FILE_GUID = 1523dde7-68e4-497a-8c74-365e2bd61f7b
+    MODULE_TYPE = UEFI_APPLICATION
+    VERSION_STRING = 0.1
+    ENTRY_POINT = ShellCEntryLib
+
+[Packages]
+    MdePkg/MdePkg.dec
+    ShellPkg/ShellPkg.dec
+    StdLib/StdLib.dec
+
+[LibraryClasses]
+    UefiLib
+    ShellCEntryLib
+    LibC
+    LibString
+    LibStdio
+
+[Sources]
+    morse.c
+    morse.h
+    morse2string.c
+
+[Guids]
+
+[Ppis]
+
+[Protocols]
+
+[FeaturePcd]
+
+[Pcd]

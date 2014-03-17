@@ -8,7 +8,7 @@
 #ifndef MORSE_H
 #define MORSE_H
 
-#define MORSE_MAP_SIZE 56
+#define MORSE_MAP_SIZE 57
 #define MORSE_CODE_MAX_CHAR 10
 
 typedef struct Morse {
@@ -21,6 +21,7 @@ Morse_map *Morse_map_create();
 char *line_to_morse(char *s, Morse_map *morse_map);
 char *get_morse(char c, Morse_map *morse_map);
 char *morse_to_string(char *morse, Morse_map *morse_map);
+char *rm_eof(char *m);
 char to_letter(char *morse, Morse_map *morse_map);
 int binsearch(char k, Morse_map *morse_map, int n);
 char *concat(char *s1, char *s2);

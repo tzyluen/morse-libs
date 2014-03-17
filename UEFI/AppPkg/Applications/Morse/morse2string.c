@@ -16,9 +16,11 @@ int main (int argc, char **argv)
     char line[MAXCHARS];
 
     while (fgets(line, sizeof line, stdin) != NULL) {
-        char *morses = line_to_morse(line, mm);
-        printf("%s\n", morses);
+        char *string = morse_to_string(line, mm);
+        printf("%s", string);
     }
+
+    free(mm);
 
     return 0;
 }

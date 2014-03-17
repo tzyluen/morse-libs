@@ -14,8 +14,7 @@
 #include "morse.h"
 
 Morse_map *Morse_map_create()
-{
-    Morse_map mm[MORSE_MAP_SIZE] = {
+{ Morse_map mm[MORSE_MAP_SIZE] = {
          {.c='\n', .m="\n"},      {.c=' ', .m=" "},       {.c='!', .m="-.-.--"},
          {.c='\"',.m= ".-..-."},  {.c='$', .m="...-..-"}, {.c='&', .m=".-..."},
          {.c='\'',.m= ".----."},  {.c='(', .m="-.--."},   {.c=')', .m="-.--.-"},
@@ -78,13 +77,16 @@ char *morse_to_string(char *morse, Morse_map *morse_map)
     assert(morse);
     assert(morse_map);
 
+    morse[strlen(morse)-1] = '\0';
     char *s = "";
     char *t = strsep(&morse, " ");
     while (t) {
-        s = append(s, to_letter(t, morse_map));
+        if (strcmp(t, "") == 0)
+            s = append(s, 0x20);    /* 0x20, ascii */
+        else 
+            s = append(s, to_letter(t, morse_map));
         t = strsep(&morse, " ");
     }
-
     return s;
 }
 
@@ -99,7 +101,7 @@ char to_letter(char *morse, Morse_map *morse_map)
         if (0 == strcmp(morse_map[i].m, morse))
             return morse_map[i].c;
 
-    return (strcmp(morse, "") == 0) ? ' ' : -1;
+    return (strcmp(morse, "") == 0) ? ' ' : '\0';
 }
 
 

@@ -108,10 +108,11 @@
 [Components]
 
 #### Sample Applications.
-#AppPkg/Applications/Hello/Hello.inf        # No LibC includes or functions.
-#AppPkg/Applications/Main/Main.inf          # Simple invocation. No other LibC functions.
-#AppPkg/Applications/Enquire/Enquire.inf    #
+  AppPkg/Applications/Hello/Hello.inf        # No LibC includes or functions.
+  AppPkg/Applications/Main/Main.inf          # Simple invocation. No other LibC functions.
+  AppPkg/Applications/Enquire/Enquire.inf    #
   AppPkg/Applications/Morse/string2morse.inf
+  AppPkg/Applications/Morse/morse2string.inf
 
 #### After extracting the Python distribution, un-comment the following line to build Python.
 #  AppPkg/Applications/Python/PythonCore.inf
