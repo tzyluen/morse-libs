@@ -1,3 +1,10 @@
+/**
+ * Morse Code Translator
+ * C (GTK+)
+ * Copyright (C) 2014 Ng Tzy Luen. All Rights Reserved.
+ *
+ * Tested under GNU C gcc 4.7.2, GTK+3.4.2-7
+ */
 #include <gtk/gtk.h>
 #include <string.h>
 #include "morse.h"

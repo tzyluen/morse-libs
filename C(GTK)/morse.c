@@ -1,9 +1,9 @@
 /**
  * Morse Code Translator
- * C
- * Copyright (C) 2013 Ng Tzy Luen. All Rights Reserved.
+ * C (GTK+)
+ * Copyright (C) 2014 Ng Tzy Luen. All Rights Reserved.
  *
- * Tested under GNU C gcc 4.7.2
+ * Tested under GNU C gcc 4.7.2, GTK+3.4.2-7
  */
 #include <assert.h>
 #include <ctype.h>
