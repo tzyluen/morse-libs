@@ -47,7 +47,7 @@ static int morsecode_open(struct cdev *dev __unused, int oflags __unused,
         uprintf("(%d) !morses\n", __LINE__);
         return error;
     }
-    uprintf("%s opened\n", morse_cdevsw.d_name);
+    printf("%s opened\n", morse_cdevsw.d_name);
     return error;
 }
 
@@ -55,7 +55,7 @@ static int morsecode_open(struct cdev *dev __unused, int oflags __unused,
 static int morsecode_close(struct cdev *dev __unused, int fflag __unused, 
         int devtype __unused, struct thread *td __unused)
 {
-    uprintf("%s closed\n", morse_cdevsw.d_name);
+    printf("%s closed\n", morse_cdevsw.d_name);
     return 0;
 }
 
@@ -64,14 +64,14 @@ static int morsecode_read(struct cdev *dev __unused, struct uio *uio,
         int ioflag __unused)
 {
     if (!morses) {
-        uprintf("(%d) !morses\n", __LINE__);
+        printf("(%d) !morses\n", __LINE__);
         return 0;
     } else {
-        uprintf("(%d) morses->%s\n", __LINE__, morses);
+        printf("(%d) morses->%s\n", __LINE__, morses);
     }
 
-    line_to_morse(morses, "hello, world", mm);
-    uprintf("(%d) %s\n", __LINE__, morses);
+    line_to_morse(morses, usrinput, mm);
+    uprintf("(%d) morses->%s\n", __LINE__, morses);
 
     return 0;
 }
@@ -80,7 +80,7 @@ static int morsecode_read(struct cdev *dev __unused, struct uio *uio,
 static int morsecode_write(struct cdev *dev __unused, struct uio *uio,
         int ioflag __unused)
 {
-    int error = 0;
+    int len, error = 0;
     if (morses)
         free(morses, M_MORSECODE);
     morses = malloc(uio->uio_iov->iov_len * 
@@ -90,12 +90,17 @@ static int morsecode_write(struct cdev *dev __unused, struct uio *uio,
                     M_USRINPUT, M_WAITOK | M_ZERO);
 
     if (!(morses && usrinput)) {
-        uprintf("Failed to allocate memory\n");
+        printf("-E- Failed to allocate memory\n");
         error = EINVAL;
     }
 
+    len = MIN(uio->uio_resid, (uio->uio_iov->iov_len * sizeof(char) + 1) - strlen(morses));
+    error = uiomove(usrinput, len, uio);
+
     if (error != 0)
-        uprintf("Write failed: bad address!\n");
+        printf("-E- Write failed: bad address!\n");
+    else
+        printf("-I- usrinput: %s\n", usrinput);
 
     return error;
 }
