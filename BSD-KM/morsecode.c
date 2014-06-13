@@ -45,9 +45,8 @@ static int morsecode_open(struct cdev *dev __unused, int oflags __unused,
     int error = 0;
     if (!morses) {
         uprintf("(%d) !morses\n", __LINE__);
-        return error;
     }
-    printf("%s opened\n", morse_cdevsw.d_name);
+    //printf("%s opened\n", morse_cdevsw.d_name);
     return error;
 }
 
@@ -55,7 +54,7 @@ static int morsecode_open(struct cdev *dev __unused, int oflags __unused,
 static int morsecode_close(struct cdev *dev __unused, int fflag __unused, 
         int devtype __unused, struct thread *td __unused)
 {
-    printf("%s closed\n", morse_cdevsw.d_name);
+    //printf("%s closed\n", morse_cdevsw.d_name);
     return 0;
 }
 
@@ -63,44 +62,60 @@ static int morsecode_close(struct cdev *dev __unused, int fflag __unused,
 static int morsecode_read(struct cdev *dev __unused, struct uio *uio,
         int ioflag __unused)
 {
+    size_t len;
+    int error;
     if (!morses) {
         printf("(%d) !morses\n", __LINE__);
-        return 0;
+        error = EINVAL;
+        return error;
     } else {
-        printf("(%d) morses->%s\n", __LINE__, morses);
+        //printf("(%d) morses->%s\n", __LINE__, morses);
     }
 
-    line_to_morse(morses, usrinput, mm);
-    uprintf("(%d) morses->%s\n", __LINE__, morses);
+    //printf("uio->uio_resid->%zu, uio->uio_offset->%ld, strlen(morses)->%ld\n",
+    //        uio->uio_resid, uio->uio_offset, strlen(morses));
+    len = MIN(uio->uio_resid, (strlen(morses) - uio->uio_offset > 0) ?
+            strlen(morses) - uio->uio_offset : 0);
+    //printf("(%d) len->%zu, morses->%s\n", __LINE__, len, morses);
 
-    return 0;
+    if ((error = uiomove(morses + uio->uio_offset, len, uio)) != 0)
+        printf("-E- (%d) uiomove failed!\n", __LINE__);
+        
+    return error;
 }
 
 
 static int morsecode_write(struct cdev *dev __unused, struct uio *uio,
         int ioflag __unused)
 {
-    int len, error = 0;
+    size_t len;
+    int error = 0;
     if (morses)
         free(morses, M_MORSECODE);
-    morses = malloc(uio->uio_iov->iov_len * 
-                    sizeof(MORSE_CODE_AVG_CHAR * sizeof(char)), 
-                    M_MORSECODE, M_WAITOK | M_ZERO);
     usrinput = malloc(uio->uio_iov->iov_len * (sizeof(char) + 1),
                     M_USRINPUT, M_WAITOK | M_ZERO);
+    morses = malloc(uio->uio_iov->iov_len * (MORSE_CODE_AVG_CHAR *
+                    sizeof(char)) + 1, M_MORSECODE, M_WAITOK | M_ZERO);
 
     if (!(morses && usrinput)) {
         printf("-E- Failed to allocate memory\n");
         error = EINVAL;
     }
 
-    len = MIN(uio->uio_resid, (uio->uio_iov->iov_len * sizeof(char) + 1) - strlen(morses));
+    len = MIN(uio->uio_resid, (strlen(usrinput) - 1 - uio->uio_offset) > 0 ?
+            strlen(usrinput) - 1 - uio->uio_offset : 0);
+    if (len == 0)
+        return error;
     error = uiomove(usrinput, len, uio);
 
-    if (error != 0)
+    if (error != 0) {
         printf("-E- Write failed: bad address!\n");
-    else
-        printf("-I- usrinput: %s\n", usrinput);
+        return error;
+    }
+
+    usrinput[len] = '\0';
+    printf("-I- usrinput: %s\n", usrinput);
+    line_to_morse(morses, usrinput, mm);
 
     return error;
 }
@@ -126,12 +141,14 @@ static int morsedev_init(struct module *m __unused, int what, void *arg __unused
             if (error != 0)
                 break;
             mm = Morse_map_create();
-            uprintf("Morsecode device loaded.\n");
+            printf("Morsecode device loaded.\n");
             break;
         case MOD_UNLOAD:
             destroy_dev(morsedev);
             free(morses, M_MORSECODE);
-            uprintf("Morsecode device unloaded.\n");
+            free(usrinput, M_USRINPUT);
+            cleanup();
+            printf("Morsecode device unloaded.\n");
             break;
         default:
             error = EOPNOTSUPP;

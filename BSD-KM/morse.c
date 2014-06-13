@@ -15,6 +15,7 @@
 
 MALLOC_DECLARE(M_MORSECODE_MAP);
 MALLOC_DEFINE(M_MORSECODE_MAP, "morsecode_buffer", "buffer for morsecode");
+Morse_map *morse_map;
 
 Morse_map *Morse_map_create()
 {
@@ -40,7 +41,7 @@ Morse_map *Morse_map_create()
          {.c='Y', .m="-.--"},    {.c='Z', .m="--.."},    {.c='_', .m="..--.-"}
     };
 
-    Morse_map *morse_map = malloc(MORSE_MAP_SIZE * sizeof(Morse_map),
+    morse_map = malloc(MORSE_MAP_SIZE * sizeof(Morse_map),
             M_MORSECODE_MAP, M_WAITOK | M_ZERO);
     memcpy(morse_map, &mm, MORSE_MAP_SIZE * sizeof(Morse_map));
 
@@ -54,12 +55,12 @@ size_t line_to_morse(char *dest, const char *s, Morse_map *morse_map)
     char *_buf;
     for (i = 0; i < strlen(s) && s[i] != '\0'; ++i) {
         if (toupper(s[i]) < '\n' || toupper(s[i]) > '_') {
-            printf("(%d): %d : %d : %d : %d\n",
+            /*printf("(%d): %d : %d : %d : %d\n",
                     __LINE__,
                     toupper(s[i]),
                     '\n',
                     '_',
-                    (toupper(s[i]) < '\n') || (toupper(s[i] > '_')));
+                    (toupper(s[i]) < '\n') || (toupper(s[i] > '_')));*/
             continue;
         }
         _buf = get_morse(toupper(s[i]), morse_map);
@@ -68,7 +69,7 @@ size_t line_to_morse(char *dest, const char *s, Morse_map *morse_map)
             strcat(dest, " ");
         ++size;
     }
-    printf("%s(%d): dest->%s\n", __FILE__, __LINE__, (char *)dest);
+    //printf("%s(%d): dest->%s\n", __FILE__, __LINE__, (char *)dest);
     return size;
 }
 
@@ -140,4 +141,10 @@ void str_to_int(char *s, Morse_map *morse_map)
         printf("%c->%d->%s\n", *s, *s,
                 get_morse(toupper(*s), morse_map));
     while (*s++ != '\0');
+}
+
+
+void cleanup(void)
+{
+    free(morse_map, M_MORSECODE_MAP);
 }

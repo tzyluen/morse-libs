@@ -26,5 +26,6 @@ char to_letter(char *, Morse_map *);
 int binsearch(char, Morse_map *, int);
 char *char_to_str(char, char *);
 void str_to_int(char *, Morse_map *);
+void cleanup(void);
 
 #endif
