@@ -15,7 +15,8 @@ Usage:
     .... . .-.. .-.. --- --..--   .-- --- .-. .-.. -.. 
     HELLO,  WORLD 
 
-
+FreeBSD Kernel Module (Character Devices):
+![alt_tag](https://github.com/tzyluen/morse-libs/blob/master/BSD-KM/morse-libs-BSD-KM.png)
 
 BIOS/UEFI on QEMU:
 
